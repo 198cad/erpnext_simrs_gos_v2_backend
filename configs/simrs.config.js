@@ -2,7 +2,7 @@ const mysql = require("mysql");
 
 let pool = mysql.createPool({
   // host: "103.112.163.253",
-  host: "168.168.168.122",
+  host: "168.168.168.124",
   user: "admin",
   password: "S!MRSGos2",
   port: "3306",
@@ -19,11 +19,12 @@ const sqlAction = (_query) => {
       } else {
         conn.query(_query, (err, rows, fields) => {
           if (err) {
-            conn.release();
             reject(err);
+            conn.release();
+          } else {
+            resolve(rows);
+            conn.release();
           }
-          conn.release();
-          resolve(rows);
         });
       }
     });
